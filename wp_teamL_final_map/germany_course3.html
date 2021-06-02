@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GERMANY COURSE - Hamburg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+      <ul class="menu_top_parent">
+        <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+            <!-- sub menu ( pick region of trip )-->
+            <ul class="menu_top_sub">
+              <li><a href="busan_attraction.html">부산</a></li>
+              <li><a href="jeju_attraction.html">제주도</a></li>
+              <li><a href="germany_attraction.html">독일</a></li>
+              <li><a href="france_attraction.html">프랑스</a></li>
+            </ul>
+        </li>
+      </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="germany_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="Brandenburg_gate.html">브란덴부르크 문</a></li>
+                    <li><a href="Reichstag_building.html">제국의회의사당</a></li>
+                    <li><a href="Topography_of_terror.html">테러의 토포그래피 박물관</a></li>
+                    <li><a href="Marienplatz.html">마리엔 광장</a></li>
+                    <li><a href="Miniatur_wunderland.html">미니어처 분더란트</a></li>
+                    <li><a href="Cologne_cathedral.html">쾰른 대성당</a></li>
+                </ul>
+            </li>
+            <li><a href="germany_course.html">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                    <li><a href="germany_course.html">베를린</a></li>
+                    <li><a href="germany_course2.html">뮌헨</a></li>
+                    <li><a href="germany_course3.html">함부르크</a></li>
+                    <li><a href="germany_course4.html">퀼른</a></li>
+                </ul>
+            </li>
+            <li><a href="germany_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="독일 풍경 2.jpg" alt="제국의회의사당">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 함부르크 투어</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span>함부르크 투어</span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        독일 최대의 무역항이자 독일 제 2의 도시, 함부르크!
+        문화와 예술도 번성했는데요, 미술을 좋아하는 사람이라면 함부르크 미술관과 다이히토어팔렌 전시장에서 현대미술과 세계적인 국제전시를 감상해보는 것은 어떨까요?
+    </div>
+
+    <!-- main contents : map -->
+    <div id="map">
+        <!-- get google map API -->
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+            async
+        ></script>
+        <script>
+            function initMap() {
+                // center location
+                const myLatLng = { 
+                    lat: 53.546765277689154,  
+                    lng: 9.993452034388454
+                };
+                
+                // locations that show on map with marker
+                var locations = [
+                    ['함부르크 시청사', 53.55051404405264, 9.992741194020718 ],
+                    ['슈파이허슈타트' , 53.54506202122269, 9.996769878075712],
+                    ['미니어처 분더란트', 53.544040012300066, 9.989058001964667],
+                    ['함부르크 초콜릿 박물관', 53.54869520340956, 10.007055372659725],
+                    ['Burgerlich', 53.549710768068636, 9.999150310411789],
+                    ['엘필하모니', 53.54145719049295, 9.985600648750394],
+                ];
+    
+                var map = new google.maps.Map(document.getElementById('map'),{
+                    zoom:14.5,
+                    center: myLatLng,
+                });
+                
+                // show location's name
+                var infowindow = new google.maps.InfoWindow();
+                
+                // draw markers
+                var marker, i;
+                console.log(locations.length);
+                
+                for(i=0; i<locations.length; i++){
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+    
+                    google.maps.event.addListener(marker, 'click', (function(marker, i){
+                        return function(){
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker,i));
+                }
+
+                // // draw line on map
+                // var polyline = new google.maps.Polyline({
+                //     map: map,
+                //     paths: [],
+                //     strokeColor: 'red',
+                //     strokeWeight: 5,
+                //     strokeOpacity:0.5
+                // });
+                // for (var i=0;i<locations.length;i++){
+                //     var path = polyline.getPath();
+                //     path.push(new google.maps.LatLng(locations[i][1], locations[i][2]));
+                // }
+            }
+        </script>
+     </div>
+    <!-- Map end-->
+
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            함부르크 시청사
+          </div>
+          <div id="step2" class="progress-step">
+            슈파이허슈타트 
+          </div>
+          <div id="step3" class="progress-step">
+            미니어처 분더란트
+          </div>
+          <div id="step4" class="progress-step">
+            함부르크 초콜릿 박물관 
+          </div>
+          <div id="step5" class="progress-step">
+            Burgerlich 
+          </div>
+          <div id="step6" class="progress-step">
+            엘필하모니
+          </div>
+        </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>함부르크 시청사</h4><img src="함부르크 시청사.jpg" width="630px" height="420px"></div>
+          <div id="contents2"> <h4>슈파이허슈타트 </h4><img src="슈파이허슈타트.jpg" width="630px" height="420px"></div>
+          <div id="contents3"> <h4>미니어처 분더란트</h4><img src="미니어처 분더란트.jpeg" width="630px" height="420px"></div>
+          <div id="contents4"> <h4>함부르크 초콜릿 박물관 </h4><img src="함부르크 초콜릿 박물관.jpg" width="630px" height="420px"></div>
+          <div id="contents5"> <h4>Burgerlich </h4><img src="Burgerlich.jpg" width="650px" height="420px"></div>
+          <div id="contents6"> <h4>엘필하모니</h4><img src="엘필하모니.jpg" width="630px" height="420px"></div><br>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        const step6 = document.getElementById('step6');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/6;
+
+
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            } else if (step === 'step5') {
+                step = 'step6';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step6') {
+                step = 'complete';
+                step6.classList.remove("is-active");
+                step6.classList.add("is-complete");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/6;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+            } else if (step === 'step6') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            } else if (step === 'complete') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step6.classList.remove("is-complete");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            }
+        }
+    </script>
+    </body>
+</html>

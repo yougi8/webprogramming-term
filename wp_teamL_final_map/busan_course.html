@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BUSAN COURSE - Day trip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+        <ul class="menu_top_parent">
+            <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+                <!-- sub menu ( each country )-->
+                <ul class="menu_top_sub">
+                    <li><a href="busan_attraction.html">부산</a></li>
+                    <li><a href="jeju_attraction.html">제주도</a></li>
+                    <li><a href="germany_attraction.html">독일</a></li>
+                    <li><a href="france_attraction.html">프랑스</a></li>
+                  </ul>
+            </li>
+        </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="busan_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="gwangalli.html">광안리 해수욕장</a></li>
+                    <li><a href="culture.html">흰여울 문화 마을</a></li>
+                    <li><a href="haedong.html">해동 용궁사</a></li>
+                    <li><a href="songdo.html">해상 케이블카</a></li>
+                    <li><a href="#">추가1</a></li>
+                    <li><a href="#">추가2</a></li>
+                </ul>
+            </li>
+            <li><a href="busan_course.html">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                    <li><a href="#">당일치기</a></li>
+                    <li><a href="busan_course2.html">2박 3일</a></li>
+                </ul>
+            </li>
+            <li><a href="busan_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="busan2.jpg" alt="부산">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 당일치기</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span>일정 : 당일치기</span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        부산을 하루만에 정복하고싶다면? 부산에서 유명한 장소들만 뽑았다! 부산에서 꼭 먹어야하는 돼지국밥부터 반드시 들러야하는 관광명소까지 알차게 구경하자.
+        영화로 유명한 '국제시장'도 있으니 영화를 좋아하는 사람이라면 한 번쯤 가볼만한 코스다.
+    </div>
+
+        <!-- main contents : map -->
+        <div id="map">
+            <!-- get google map API -->
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+                async
+            ></script>
+            <script>
+                function initMap() {
+                    // center location
+                    const myLatLng = { 
+                        lat: 35.1017566523608,  
+                        lng: 129.02829506507248
+                    };
+                    
+                    // locations that show on map with marker
+                    var locations = [
+                        ['부산역', 35.1166481590727, 129.04008363005065 ],
+                        ['본전 돼지국밥' ,35.11679856788154, 129.04130728476707],
+                        ['국제시장' , 35.1017566523608 , 129.02829506507248],
+                        ['흰여울 문화마을' ,35.080910547952314, 129.04406050882943],
+                        ['송도 해수욕장' ,35.076389447948614, 129.0172881978689],
+                        ['곤포횟집' ,35.082761555515766, 129.02268648512654],
+                    ];
+        
+                    var map = new google.maps.Map(document.getElementById('map'),{
+                        zoom:13,
+                        center: myLatLng,
+                    });
+                    
+                    // show location's name
+                    var infowindow = new google.maps.InfoWindow();
+                    
+                    // draw markers
+                    var marker, i;
+                    console.log(locations.length);
+                    
+                    for(i=0; i<locations.length; i++){
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                            map: map
+                        });
+        
+                        google.maps.event.addListener(marker, 'click', (function(marker, i){
+                            return function(){
+                                infowindow.setContent(locations[i][0]);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker,i));
+                    }
+    
+                    // draw line on map
+                    var polyline = new google.maps.Polyline({
+                        map: map,
+                        paths: [],
+                        strokeColor: 'red',
+                        strokeWeight: 5,
+                        strokeOpacity:0.5
+                    });
+                    for (var i=0;i<locations.length;i++){
+                        var path = polyline.getPath();
+                        path.push(new google.maps.LatLng(locations[i][1], locations[i][2]));
+                    }
+                }
+            </script>
+         </div>
+    
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            부산역
+          </div>
+          <div id="step2" class="progress-step">
+            본전 돼지국밥
+          </div>
+          <div id="step3" class="progress-step">
+            국제시장
+          </div>
+          <div id="step4" class="progress-step">
+            흰여울 문화마을
+          </div>
+          <div id="step5" class="progress-step">
+            송도 해수욕장
+          </div>
+          <div id="step6" class="progress-step">
+            곤포 횟집
+          </div>
+        </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>부산역</h4><img src="busan_station.jpg" width="630px"></div>
+          <div id="contents2"> <h4>본전 돼지국밥</h4><img src="busan_store1.jpg" width="630px" height="450px"></div>
+          <div id="contents3"> <h4>국제시장</h4><img src="busan_store2.jpg" width="630px"></div>
+          <div id="contents4"> <h4>흰여울 문화마을</h4><img src="culture2.jpg" width="630px"></div>
+          <div id="contents5"> <h4>송도 해수욕장</h4><img src="busan_beach6.jpg" width="650px"></div>
+          <div id="contents6"> <h4>곤포 횟집</h4><img src="busan_store3.jpg" width="630px" height="450px"></div>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        const step6 = document.getElementById('step6');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/6;
+
+
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            } else if (step === 'step5') {
+                step = 'step6';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step6') {
+                step = 'complete';
+                step6.classList.remove("is-active");
+                step6.classList.add("is-complete");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/6;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+            } else if (step === 'step6') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            } else if (step === 'complete') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step6.classList.remove("is-complete");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            }
+        }
+    </script>
+    </body>
+</html>

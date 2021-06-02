@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FRANCE COURSE - 아비뇽</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+        <ul class="menu_top_parent">
+            <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+                <!-- sub menu ( each country )-->
+                <ul class="menu_top_sub">
+                    <li><a href="busan_attraction.html">부산</a></li>
+                    <li><a href="jeju_attraction.html">제주도</a></li>
+                    <li><a href="germany_attraction.html">독일</a></li>
+                    <li><a href="france_attraction.html">프랑스</a></li>
+                  </ul>
+            </li>
+        </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="france_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="orangerie.html">오랑주리 미술관</a></li>
+                    <li><a href="orsay.html">오르세 미술관</a></li>
+                    <li><a href="rouvre.html">루브르 박물관</a></li>
+                    <li><a href="champsElysees.html">샹젤리에 거리</a></li>
+                    <li><a href="eiffel.html">에펠탑</a></li>
+                    <li><a href="montmartre.html">몽마르뜨 언덕</a></li>
+                </ul>
+            </li>
+            <li><a href="france_course.html">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                    <li><a href="france_course.html">파리</a></li>
+                    <li><a href="france_course2.html">아비뇽</a></li>
+                </ul>
+            </li>
+            <li><a href="france_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="eiffel_top.jpg" alt="프랑스">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 아비뇽</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span> 아비뇽 투어 </span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        '교황의 도시' 아비뇽! 파리에서 멀지 않은 곳에 있는 아비뇽은, 프로방스 여행의 문을 열기에 좋은 시작점이다.
+        독특한 역사적 배경과 문화유산이 있는 아비뇽에서의 하루를 즐겨보자!
+    </div>
+
+        <!-- main contents : map -->
+        <div id="map">
+            <!-- get google map API -->
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+                async
+            ></script>
+            <script>
+                function initMap() {
+                    // center location
+                    const myLatLng = { 
+                        lat:   43.95158683478665,  
+                        lng: 4.807819140205579
+                    };
+                    
+                    // locations that show on map with marker
+                    var locations1 = [
+                        ['생베네제 교' ,43.95402982346173, 4.8049102843864695],
+                        ['Rocher des Doms 공원' ,43.95302815026557, 4.80773622856718],
+                        ['아비뇽 대성당' , 43.95158683478665, 4.807819140205579],
+                        ['아비뇽 교황청 ', 43.95102200838342, 4.807729284648989 ],
+                        ['오홀로쥬 공원' ,43.94948293124471, 4.806216826832068],
+                    ];
+        
+                    var map = new google.maps.Map(document.getElementById('map'),{
+                        zoom:16,
+                        center: myLatLng,
+                    });
+                    
+                    // show location's name
+                    var infowindow = new google.maps.InfoWindow();
+                    
+                    // draw markers
+                    var marker, i;
+                    console.log(locations1.length);
+                    
+                    for(i=0; i<locations1.length; i++){
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations1[i][1], locations1[i][2]),
+                            map: map
+                        });
+        
+                        google.maps.event.addListener(marker, 'click', (function(marker, i){
+                            return function(){
+                                infowindow.setContent(locations1[i][0]);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker,i));
+                    }
+                    // draw line on map
+                    var polyline1 = new google.maps.Polyline({
+                        map: map,
+                        paths: [],
+                        strokeColor: 'red',
+                        strokeWeight: 5,
+                        strokeOpacity:0.5
+                    });
+                    for (var i=0;i<locations1.length;i++){
+                        var path = polyline1.getPath();
+                        path.push(new google.maps.LatLng(locations1[i][1], locations1[i][2]));
+                    }
+                }
+            </script>
+         </div>
+    
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            아비뇽 교황청
+          </div>
+          <div id="step2" class="progress-step">
+            Rocher des Doms 공원
+          </div>
+          <div id="step3" class="progress-step">
+            아비뇽 대성당
+          </div>
+          <div id="step4" class="progress-step">
+            생베네제 교
+          </div>
+          <div id="step5" class="progress-step">
+            오홀로쥬 공원
+          </div>
+        </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>아비뇽 교황청</h4><img src="avinong.jpg" width="630px" height="420px"></div>
+          <div id="contents2"> <h4>Rocher des Doms 공원</h4><img src="rocher.jpg" width="630px" height="420px"></div>
+          <div id="contents3"> <h4>아비뇽 대성당</h4><img src="avinon_church.jpg" width="630px" height="420px"></div>
+          <div id="contents4"> <h4>생베네제 교</h4><img src="saintvene.jpg" width="630px" height="420px"></div>
+          <div id="contents5"> <h4>오홀로쥬 공원</h4><img src="oholo.JPG" width="650px" height="420px"></div><br>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/5;
+
+
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.5;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.68;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step5') {
+                step = 'complete';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/5;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.5;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.68;
+            } else if (step === 'complete') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.68;
+            }
+        }
+    </script>
+    </body>
+</html>

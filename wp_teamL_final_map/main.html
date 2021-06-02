@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <!-- 모바일 대응을 위한 뷰포트 기본 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+    <img src="trip.jpg" id="home" alt="Main" width="100%" height="45%">
+
+        <div id="top"> 
+                    <ul class="sa sa-up" data-sa-margin="50">
+                        <a href="busan_attraction.html"><li>부산</li></a>
+                        <a href="jeju_attraction.html"><li>제주도</li></a>
+                        <a href="germany_attraction.html"><li>독일</li></a>
+                        <a href="france_attraction.html"><li>프랑스</li></a>
+                    </ul>
+        </div>
+        <main>
+            <div class="wrap">
+                    <div class="sa sa-up" data-sa-margin="50"> 
+                        <a href="busan_attraction.html"><img src="busan.jpg" alt="Busan" width="100%" height="100%"> </a>
+                    </div>
+                    <p class="text">BUSAN</p>
+            </div>
+            <div class="wrap">
+                <div class="sa sa-up" data-sa-margin="100"> 
+                    <a href="jeju_attraction.html"><img src="jeju.jpg" alt="JEJU Island" width="100%" height="70%"> </a>
+                </div>
+                <p class="text">JEJU-ISLAND</p>
+            </div>
+            <div class="wrap">
+                <div class="sa sa-up" data-sa-margin="150"> 
+                    <a href="germany_attraction.html"><img src="germany.jpg" alt="Germany" width="100%" height="100%"> </a>
+                </div>
+                <p class="text">GERMANY</p>
+            </div>
+            <div class="wrap">
+                <div class="sa sa-up" data-sa-margin="200">
+                    <a href="france_attraction.html"><img src="france.jpg" alt="France" width="100%" height="80%"></a>
+                </div>
+                <p class="text">FRANCE</p>
+            </div>
+        </main>
+
+    <script>
+    // Scroll Animation (sa, 스크롤 애니메이션)
+    const saDefaultMargin = 300;    // const : 변수 재선언, 재할당 불가능
+    let saTriggerMargin = 0;    // let : 변수에 재할당 가능 / saTriggerMargin:스크롤바 현재 위치
+    let saTriggerHeight = 0;    // saTriggerHeight : 화면에서 위치
+    const saElementList = document.querySelectorAll('.sa'); // sa인 것들 모두 가져와서 배열로 저장   
+    var TopMenu, TopMenuPosition;
+    TopMenu = document.getElementById('top'); // 고정될 메뉴바를 인식한다.
+
+    const saFunc = function() {
+        console.log(window.scrollY)
+        
+        home.style.opacity = 1 - window.scrollY / 900;  // 스크롤 내리면 타이틀 사진이 흐려짐
+
+        for (const element of saElementList) {
+
+            // 여행지 사진 띄우기 혹은 숨기기
+            if (element.dataset.saMargin) { // margin값이 설정되어있으면
+                saTriggerMargin = parseInt(element.dataset.saMargin);   
+            } 
+            else {
+                saTriggerMargin = saDefaultMargin;
+            }
+
+            if (element.dataset.saTrigger) {
+                saTriggerHeight = document.querySelector(element.dataset.saTrigger).getBoundingClientRect().top + saTriggerMargin;
+            } 
+            else {
+                saTriggerHeight = element.getBoundingClientRect().top + saTriggerMargin;
+            }
+
+            if (window.innerHeight > saTriggerHeight) {
+                element.classList.add('show');
+            }
+            else{
+                element.classList.remove('show');
+            }
+
+            // 상단바 고정 혹은 해지
+            if ( window.scrollY >= window.innerHeight/0.7 ) {
+                TopMenu.classList.add("sticky");
+            } else {
+                TopMenu.classList.remove("sticky");
+            }
+        }
+    }
+
+    window.addEventListener('load', saFunc);    // 대상객체.addEventListener('이벤트명(이벤트를 발생했을 때)', function 함수명(이거 실행))
+    window.addEventListener('scroll', saFunc);
+    </script>
+  </body>
+</html>

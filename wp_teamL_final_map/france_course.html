@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FRANCE COURSE - paris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+        <ul class="menu_top_parent">
+            <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+                <!-- sub menu ( each country )-->
+                <ul class="menu_top_sub">
+                    <li><a href="busan_attraction.html">부산</a></li>
+                    <li><a href="jeju_attraction.html">제주도</a></li>
+                    <li><a href="germany_attraction.html">독일</a></li>
+                    <li><a href="france_attraction.html">프랑스</a></li>
+                  </ul>
+            </li>
+        </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="france_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="orangerie.html">오랑주리 미술관</a></li>
+                    <li><a href="orsay.html">오르세 미술관</a></li>
+                    <li><a href="rouvre.html">루브르 박물관</a></li>
+                    <li><a href="champsElysees.html">샹젤리에 거리</a></li>
+                    <li><a href="eiffel.html">에펠탑</a></li>
+                    <li><a href="montmartre.html">몽마르뜨 언덕</a></li>
+                </ul>
+            </li>
+            <li><a href="france_course.html">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                    <li><a href="france_course.html">파리</a></li>
+                    <li><a href="france_course2.html">아비뇽</a></li>
+                </ul>
+            </li>
+            <li><a href="france_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="eiffel_top.jpg" alt="프랑스">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 파리</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span> 파리 투어 </span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        사랑의 도시 파리에서 로맨틱한 2일을 보내보자. 파리가 세계에서 가장 로맨틱한 도시 중 하나로 불리는 이유를 직접 경험해보면 좋을 것 같다.
+    </div>
+
+        <!-- main contents : map -->
+        <div id="map">
+            <!-- get google map API -->
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+                async
+            ></script>
+            <script>
+                function initMap() {
+                    // center location
+                    const myLatLng = { 
+                        lat:  48.87497906345703, 
+                        lng: 2.3322006613737782
+                    };
+                    
+                    // locations that show on map with marker
+                    var locations1 = [
+                        ['노트르담 대성당', 48.853109369193284, 2.349955742492258 ],
+                        ['생제르맹데프레' ,48.85562418237454, 2.3342339271689325],
+                        ['오르세 미술관' , 48.86010254947111, 2.3264755676164697],
+                        ['콩코르드 광장' ,48.86578055296225, 2.3206267983096227],
+                        ['앙젤리나' ,48.86516035719724, 2.32840048296314],
+                    ];
+        
+                    var locations2 = [
+                        ['몽마르뜨', 48.888507299540045, 2.329659402315222 ],
+                        ['마르스 광장' ,48.856205147250314, 2.2979008374193928],
+                        ['에펠탑' , 48.85849713650984, 2.294481298309358],
+                    ];
+        
+                    var map = new google.maps.Map(document.getElementById('map'),{
+                        zoom:13,
+                        center: myLatLng,
+                    });
+                    
+                    // show location's name
+                    var infowindow = new google.maps.InfoWindow();
+                    
+                    // draw markers
+                    var marker, i;
+                    console.log(locations1.length);
+                    
+                    for(i=0; i<locations1.length; i++){
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations1[i][1], locations1[i][2]),
+                            map: map
+                        });
+        
+                        google.maps.event.addListener(marker, 'click', (function(marker, i){
+                            return function(){
+                                infowindow.setContent(locations1[i][0]);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker,i));
+                    }
+                    // draw line on map
+                    var polyline1 = new google.maps.Polyline({
+                        map: map,
+                        paths: [],
+                        strokeColor: 'red',
+                        strokeWeight: 5,
+                        strokeOpacity:0.5
+                    });
+                    for (var i=0;i<locations1.length;i++){
+                        var path = polyline1.getPath();
+                        path.push(new google.maps.LatLng(locations1[i][1], locations1[i][2]));
+                    }
+
+                    for(i=0; i<locations2.length; i++){
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations2[i][1], locations2[i][2]),
+                            map: map
+                        });
+        
+                        google.maps.event.addListener(marker, 'click', (function(marker, i){
+                            return function(){
+                                infowindow.setContent(locations2[i][0]);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker,i));
+                    }
+                    // draw line on map
+                    var polyline2 = new google.maps.Polyline({
+                        map: map,
+                        paths: [],
+                        strokeColor: 'green',
+                        strokeWeight: 5,
+                        strokeOpacity:0.5
+                    });
+                    for (var i=0;i<locations2.length;i++){
+                        var path = polyline2.getPath();
+                        path.push(new google.maps.LatLng(locations2[i][1], locations2[i][2]));
+                    }
+                }
+            </script>
+         </div>
+    
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            노트르담 대성당
+          </div>
+          <div id="step2" class="progress-step">
+            생제르맹데프레
+          </div>
+          <div id="step3" class="progress-step">
+            오르세 미술관
+          </div>
+          <div id="step4" class="progress-step">
+            콩코르드 광장
+          </div>
+          <div id="step5" class="progress-step">
+            앙젤리나
+          </div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-track"></div>
+            <div id="step6" class="progress-step">
+                몽마르뜨
+            </div>
+            <div id="step7" class="progress-step">
+                마르스 광장
+            </div>
+            <div id="step8" class="progress-step">
+                에펠탑
+            </div>
+          </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>노트르담 대성당</h4><img src="notrdam.jpg" width="630px" height="420px"></div>
+          <div id="contents2"> <h4>생제르맹데프레</h4><img src="saint.jpg" width="630px" height="420px"></div>
+          <div id="contents3"> <h4>오르세 미술관</h4><img src="orsayMuseum.jpg" width="630px" height="420px"></div>
+          <div id="contents4"> <h4>콩코르드 광장</h4><img src="concorde.jpg" width="630px" height="420px"></div>
+          <div id="contents5"> <h4>앙젤리나</h4><img src="angelina.jpg" width="650px" height="420px"></div>
+          <div id="contents6"> <h4>몽마르뜨</h4><img src="montmartre_park.jpg" width="630px" height="420px"></div>
+          <div id="contents7"> <h4>마르스 광장</h4><img src="mars.jpeg" width="630px" height="420px"></div>
+          <div id="contents8"> <h4>에펠탑</h4><img src="eiffel_dark.jpg" width="630px" height="420px"></div><br>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        const step6 = document.getElementById('step6');
+        const step7 = document.getElementById('step7');
+        const step8 = document.getElementById('step8');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/8;
+
+
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/4;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.65;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+            } else if (step === 'step5') {
+                step = 'step6';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.6;
+            } else if (step === 'step6') {
+                step = 'step7';
+                step6.classList.remove("is-active");
+                step6.classList.add("is-complete");
+                step7.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.33;
+            } else if (step === 'step7') {
+                step = 'step8';
+                step7.classList.remove("is-active");
+                step7.classList.add("is-complete");
+                step8.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step8') {
+                step = 'complete';
+                step8.classList.remove("is-active");
+                step8.classList.add("is-complete");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/8;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/4;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.65;
+            } else if (step === 'step6') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2;
+            } else if (step === 'step7') {
+                step = 'step6';
+                step7.classList.remove("is-active");
+                step6.classList.remove("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.6;
+            } else if (step === 'step8') {
+                step = 'step7';
+                step8.classList.remove("is-active");
+                step7.classList.remove("is-complete");
+                step7.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.33;
+            } else if (step === 'complete') {
+                step = 'step7';
+                step8.classList.remove("is-active");
+                step8.classList.remove("is-complete");
+                step7.classList.remove("is-complete");
+                step7.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.33;
+            }
+        }
+    </script>
+    </body>
+</html>

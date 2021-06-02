@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JUJU ISLAND COURSE - 당일치기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+      <ul class="menu_top_parent">
+        <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+            <!-- sub menu ( pick region of trip )-->
+            <ul class="menu_top_sub">
+              <li><a href="busan_attraction.html">부산</a></li>
+              <li><a href="jeju_attraction.html">제주도</a></li>
+              <li><a href="germany_attraction.html">독일</a></li>
+              <li><a href="france_attraction.html">프랑스</a></li>
+            </ul>
+        </li>
+      </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="jeju_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="성산일출봉.html">성산일출봉</a></li>
+                    <li><a href="에코랜드테마파크.html">에코랜드 테마파크</a></li>
+                    <li><a href="협재해수욕장.html">협재 해수욕장</a></li>
+                    <li><a href="주상절리.html">주상절리</a></li>
+                    <li><a href="제주마방목지.html">제주마 방목지</a></li>
+                    <li><a href="테디베어뮤지엄.html">테디베어 뮤지엄</a></li>
+                </ul>
+            </li>
+            <li><a href="#">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                  <li><a href="jeju_course.html">당일치기</a></li>
+                  <li><a href="jeju_course2.html">1박 2일</a></li>
+              </ul>
+              </li>
+            <li><a href="jeju_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="jeju.jpg">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 당일치기</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span>일정 : 당일치기</span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        아름다운 섬 제주도를 당일치기로 다녀오자! 산과 바다를 하루만에 모두 느낄 수 있는 코스입니다. 맛있는 수제버거와 제주도 흑돼지까지 맛보고 가세요~
+    </div>
+
+    <!-- main contents : map -->
+    <div id="map">
+        <!-- get google map API -->
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+            async
+        ></script>
+        <script>
+            function initMap() {
+                // center location
+                const myLatLng = { 
+                    lat: 33.375666880975864,  
+                    lng: 126.53582154008053 
+                };
+                
+                // locations that show on map with marker
+                var locations = [
+                    ['제주국제공항', 33.510619228113384, 126.49127829604244 ],
+                    ['성산일출봉 ' ,33.459513490591185, 126.94256657418849],
+                    ['도두후레쉬 ' , 33.50345609143449, 126.46592521138287],
+                    ['협재해수욕장 ' ,33.39415977679221, 126.2396806172313],
+                    ['알동네집 ' ,33.25452279585708, 126.34005865856062],
+                ];
+    
+                var map = new google.maps.Map(document.getElementById('map'),{
+                    zoom:10,
+                    center: myLatLng,
+                });
+                
+                // show location's name
+                var infowindow = new google.maps.InfoWindow();
+                
+                // draw markers
+                var marker, i;
+                console.log(locations.length);
+                
+                for(i=0; i<locations.length; i++){
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+    
+                    google.maps.event.addListener(marker, 'click', (function(marker, i){
+                        return function(){
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker,i));
+                }
+
+                // draw line on map
+                var polyline = new google.maps.Polyline({
+                    map: map,
+                    paths: [],
+                    strokeColor: 'red',
+                    strokeWeight: 5,
+                    strokeOpacity:0.5
+                });
+                for (var i=0;i<locations.length;i++){
+                    var path = polyline.getPath();
+                    path.push(new google.maps.LatLng(locations[i][1], locations[i][2]));
+                }
+            }
+        </script>
+     </div>
+    <!-- Map end-->
+
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            제주국제공항 
+          </div>
+          <div id="step2" class="progress-step">
+            성산일출봉 
+          </div>
+          <div id="step3" class="progress-step">
+            도두후레쉬 
+          </div>
+          <div id="step4" class="progress-step">
+            협재해수욕장  
+          </div>
+          <div id="step5" class="progress-step">
+            알동네집 
+          </div>
+        </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>제주국제공항 </h4><img src="제주국제공항.PNG" width="630px" height="420px"></div>
+          <div id="contents2"> <h4>성산일출봉 </h4><img src="성산일출봉.PNG" width="630px" height="420px"></div>
+          <div id="contents3"> <h4>도두후레쉬 </h4><img src="도두후레쉬.PNG" width="630px" height="420px"></div>
+          <div id="contents4"> <h4>협재해수욕장  </h4><img src="협재 해수욕장.PNG" width="630px" height="420px"></div>
+          <div id="contents5"> <h4>알동네집 </h4><img src="알동네집.PNG" width="650px" height="420px"></div><br>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/5;
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.5;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.67;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step5') {
+                step = 'compelete';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+                step6.classList.add("is-active");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/5;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.5;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.67;
+            } else if (step === 'compelete') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.67;
+            }
+        }
+    </script>
+    </body>
+</html>

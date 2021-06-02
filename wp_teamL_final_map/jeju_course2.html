@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JUJU ISLAND COURSE - 1박 2일</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="course.css">
+    <script>
+        function jbFunc() {
+            document.getElementById( 'progress_bar' ).value = '80';
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Top navigation bar ( attraction / recommend course / restaurant ) -->
+    <header>
+        <!-- Button that go to main page -->
+      <ul class="menu_top_parent">
+        <li><a href="main.html#goHere">&nbsp;Home&nbsp;</a>
+            <!-- sub menu ( pick region of trip )-->
+            <ul class="menu_top_sub">
+              <li><a href="busan_attraction.html">부산</a></li>
+              <li><a href="jeju_attraction.html">제주도</a></li>
+              <li><a href="germany_attraction.html">독일</a></li>
+              <li><a href="france_attraction.html">프랑스</a></li>
+            </ul>
+        </li>
+      </ul>
+
+        <!-- attraction / recommend / restaurant -->
+        <ul class="menu_top_parent">
+            <li><a href="jeju_attraction.html">관광 명소</a>
+                <ul class="menu_top_sub">
+                    <li><a href="성산일출봉.html">성산일출봉</a></li>
+                    <li><a href="에코랜드테마파크.html">에코랜드 테마파크</a></li>
+                    <li><a href="협재해수욕장.html">협재 해수욕장</a></li>
+                    <li><a href="주상절리.html">주상절리</a></li>
+                    <li><a href="제주마방목지.html">제주마 방목지</a></li>
+                    <li><a href="테디베어뮤지엄.html">테디베어 뮤지엄</a></li>
+                </ul>
+            </li>
+            <li><a href="#">추천 코스</a>
+                <!-- sub menu ( pick duration of trip )-->
+                <ul class="menu_top_sub">
+                  <li><a href="jeju_course.html">당일치기</a></li>
+                  <li><a href="jeju_course2.html">1박 2일</a></li>
+              </ul>
+              </li>
+            <li><a href="jeju_restaurant.html">맛집</a></li>
+        </ul>
+    </header>
+
+    <div id="top_img">
+        <img src="jeju.jpg">
+        <p class="text"> 추천 코스<br>&nbsp; &nbsp; - 1박2일</p>
+    </div>
+
+    <div id="main_title" >
+        <img src="calendar.png" width="50px">
+        <span>일정 : 1박 2일</span>
+    </div>
+    <br>
+    <hr width="800px" color="#c5c9c6" > <br>
+    
+    <div id="main_script">
+        1박 2일 동안 다양한 제주의 명소 곳곳을 방문하자! 특히 아름다운 자연을 보며 힐링하고 싶은 사람들에게 추천한다. 벚꽃과 폭포를 보며 근심을 날려버리고 에코랜드에서 피크닉을 즐겨보세요.
+    </div>
+
+    <!-- main contents : map -->
+    <div id="map">
+        <!-- get google map API -->
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgW4oxqVh42r6b21kzqEhAuUcBh6AgOg&callback=initMap&libraries=&v=weekly"
+            async
+        ></script>
+        <script>
+            function initMap() {
+                 // 1일차 코스
+            var name1 = ['제주국제공항 ', '삼성혈벚꽃 ', '미친부엌 ', '천지연폭포 ', '오설록티뮤지엄']
+            var x1 = [33.510619228113384,, 33.504287, 33.517107257311444, 33.24736679527122, 33.30602319691273]   
+            var y1 = [126.49127829604244, 126.529192, 126.52321928585293, 126.55460402492393, 126.28952326873878 ]
+            
+            // 2일차 코스
+            var name2=['녹산로 유채꽃', '넘버피넛', '서귀포매일올레시장 ', '에코랜드 테마파크']
+            var x2 = [33.434930407704904,33.25861855448658, 33.24951823271037,  33.45573545853498 ]   
+            var y2 = [126.72498478340384,  126.41385499788416, 126.56392676904878,   126.66820875555806]
+
+            // center location
+            const myLatLng = { 
+                lat: 33.375666880975864,  
+                    lng: 126.53582154008053 
+            };
+            var map = new google.maps.Map(document.getElementById('map'),{
+                zoom:10,
+                 center: myLatLng,
+            });
+            // show location's name
+            var infowindow = new google.maps.InfoWindow();
+                        
+            // draw markers
+            var marker,marker2,i;
+                        
+            for(i=0; i<x1.length; i++){
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(x1[i], y1[i]),
+                    map: map
+                });
+                google.maps.event.addListener(marker, 'click', (function(marker, i){
+                    return function(){
+                        infowindow.setContent(name1[i]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker,i));
+            }
+            for(i=0; i<x2.length; i++){
+                marker2 = new google.maps.Marker({
+                    position: new google.maps.LatLng(x2[i], y2[i]),
+                    map: map
+                });
+                google.maps.event.addListener(marker2, 'click', (function(marker2, i){
+                    return function(){
+                        infowindow.setContent(name2[i]);
+                        infowindow.open(map, marker2);
+                    }
+                })(marker2,i));
+            }
+
+            // draw line on map
+            var polyline1 = new google.maps.Polyline({
+                map: map,
+                paths: [],
+                strokeColor: 'red',
+                strokeWeight: 5,
+                strokeOpacity:0.5
+            });
+            for (var i=0;i<x1.length;i++){
+                var path = polyline1.getPath();
+                path.push(new google.maps.LatLng(x1[i], y1[i]));
+            }
+            // draw line on map
+            var polyline2 = new google.maps.Polyline({
+                map: map,
+                paths: [],
+                strokeColor: 'green',
+                strokeWeight: 4,
+                strokeOpacity:0.6
+            });
+            for (var i=0;i<x2.length;i++){
+                var path = polyline2.getPath();
+                path.push(new google.maps.LatLng(x2[i], y2[i]));
+            }
+        }
+        </script>
+     </div>
+    <!-- Map end-->
+
+    <!-- course button -->
+    <div id="button">
+        <div>
+            <button onClick=prev()>Prev</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+            <button onClick=next()>Next</button>
+        </div>
+    </div>
+
+    <!-- course bar -->
+    <div class="container">
+        <!-- 2일차-->
+        <div class="progress">
+          <div class="progress-track"></div>
+          <div id="step1" class="progress-step">
+            제주국제공항 
+          </div>
+          <div id="step2" class="progress-step">
+            삼성혈벚꽃  
+          </div>
+          <div id="step3" class="progress-step">
+            미친부엌  
+          </div>
+          <div id="step4" class="progress-step">
+            천지연폭포   
+          </div>
+          <div id="step5" class="progress-step">
+            오설록티뮤지엄
+          </div>  
+          </div>
+        </div>
+
+        <!-- 2일차-->
+        <div class="progress">
+            <div class="progress-track"></div>
+            <div id="step6" class="progress-step">
+              녹산로 유채꽃 
+            </div>
+            <div id="step7" class="progress-step">
+              넘버피넛   
+            </div>
+            <div id="step8" class="progress-step">
+              서귀포매일올레시장   
+            </div>
+            <div id="step9" class="progress-step">
+              에코랜드 테마파크   
+            </div>
+          </div>
+      </div>
+
+      <!-- course image -->
+      <div id="course_contents">
+          <div id="contents1"> <h4>제주국제공항 </h4><img src="제주국제공항.PNG" width="630px" height="420px"></div>
+          <div id="contents2"> <h4>삼성혈벚꽃  </h4><img src="삼성혈벚꽃.PNG".PNG" width="630px" height="420px"></div>
+          <div id="contents3"> <h4>미친부엌 </h4><img src="미친부엌.PNG" width="630px" height="420px"></div>
+          <div id="contents4"> <h4>천지연폭포  </h4><img src="천지연폭포.PNG" width="630px" height="420px"></div>
+          <div id="contents5"> <h4>오설록티뮤지엄 </h4><img src="천지연폭포.PNG" width="650px" height="420px"></div>
+          <div id="contents6"> <h4>녹산로 유채꽃 </h4><img src="녹산로유채꽃.PNG" width="630px" height="420px"></div>
+          <div id="contents7"> <h4>넘버피넛 </h4><img src="넘버피넛.PNG" width="630px" height="420px"></div>
+          <div id="contents8"> <h4>서귀포 매일 올레시장  </h4><img src="서귀포올레시장.PNG" width="630px" height="420px"></div>
+          <div id="contents9"> <h4>에코랜드 테마파크 </h4><img src="에코랜드.PNG" width="650px" height="420px"></div><br>
+      </div>
+      <script>
+        let step = 'step1';
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const step5 = document.getElementById('step5');
+        const step6 = document.getElementById('step6');
+        const step7 = document.getElementById('step7');
+        const step8 = document.getElementById('step8');
+        const step9 = document.getElementById('step9');
+        step1.classList.add("is-active");
+        var objDiv = document.getElementById("course_contents"); 
+        function next() {
+            if (step === 'step1') {
+                step = 'step2';
+                step1.classList.remove("is-active");
+                step1.classList.add("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/9;
+            } else if (step === 'step2') {
+                step = 'step3';
+                step2.classList.remove("is-active");
+                step2.classList.add("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/4.5;
+
+            } else if (step === 'step3') {
+                step = 'step4';
+                step3.classList.remove("is-active");
+                step3.classList.add("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+
+            } else if (step === 'step4') {
+                step = 'step5';
+                step4.classList.remove("is-active");
+                step4.classList.add("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.25;
+
+            } else if (step === 'step5') {
+                step = 'step6';
+                step5.classList.remove("is-active");
+                step5.classList.add("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.8;
+
+            } else if (step === 'step6') {
+                step = 'step7';
+                step6.classList.remove("is-active");
+                step6.classList.add("is-complete");
+                step7.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+
+            } else if (step === 'step7') {
+                step = 'step8';
+                step7.classList.remove("is-active");
+                step7.classList.add("is-complete");
+                step8.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.29;
+
+            } else if (step === 'step8') {
+                step = 'step9';
+                step8.classList.remove("is-active");
+                step8.classList.add("is-complete");
+                step9.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else if (step === 'step9') {
+                step = 'compelete';
+                step8.classList.remove("is-active");
+                step8.classList.add("is-complete");
+                step9.classList.add("is-active");
+            }
+        }
+        function prev() {
+            if (step === 'step2') {
+                step = 'step1';
+                step2.classList.remove("is-active");
+                step1.classList.remove("is-complete");
+                step1.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollTo;
+            } else if (step === 'step3') {
+                step = 'step2';
+                step3.classList.remove("is-active");
+                step2.classList.remove("is-complete");
+                step2.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/9;
+            } else if (step === 'step4') {
+                step = 'step3';
+                step4.classList.remove("is-active");
+                step3.classList.remove("is-complete");
+                step3.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/4.5;
+            } else if (step === 'step5') {
+                step = 'step4';
+                step5.classList.remove("is-active");
+                step4.classList.remove("is-complete");
+                step4.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/3;
+            } else if (step === 'step6') {
+                step = 'step5';
+                step6.classList.remove("is-active");
+                step5.classList.remove("is-complete");
+                step5.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/2.25;
+            } else if (step === 'step7') {
+                step = 'step6';
+                step7.classList.remove("is-active");
+                step6.classList.remove("is-complete");
+                step6.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.8;
+            } else if (step === 'step8') {
+                step = 'step7';
+                step8.classList.remove("is-active");
+                step7.classList.remove("is-complete");
+                step7.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.5;
+            } else if (step === 'step9') {
+                step = 'step8';
+                step9.classList.remove("is-active");
+                step8.classList.remove("is-complete");
+                step8.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.29;
+            } else if (step === 'compelete') {
+                step = 'step8';
+                step9.classList.remove("is-active");
+                step9.classList.remove("is-complete");
+                step8.classList.remove("is-complete");
+                step8.classList.add("is-active");
+                objDiv.scrollTop = objDiv.scrollHeight/1.29;
+            }
+        }
+    </script>
+    </body>
+</html>
